@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import './styles/main.sass';
+import Form from "./components/Form";
 
 function App() {
+  const [data, setData] = useState('Loading');
+  async function fetchAPI() {
+    let res = await fetch("http://localhost:4000");
+    let json = await res.json();
+    setData(json.ip);
+  }
+  fetchAPI();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form></Form>
+      Your IP address is {data}
     </div>
   );
 }
