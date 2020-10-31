@@ -18,15 +18,21 @@ class Form extends React.Component{
 
     handleSubmit =  async (e) => {
         e.preventDefault();
+        var formBody = [];
+        for (var p in this.state) {
+            var encodedKey = encodeURIComponent(p);
+            var encodedValue = encodeURIComponent(this.state[p]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
         let res = await fetch('http://localhost:4000/post', {
             mode: 'cors',
             method: 'POST',
             headers: { 
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: JSON.stringify(this.state)
+            body: formBody
         });
-        console.log(res);
     }
 
     render() {
